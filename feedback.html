@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - TestWiseQ</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border 0.3s ease-in-out;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #0078D7;
+        }
+
+        button {
+            background-color: #0078D7;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #3a3dfa;
+        }
+
+        .back-button {
+            background-color: #e60b0b;
+            color: white; /* Changed from black to white for better readability */
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .back-button:hover {
+            background-color: #c30909;
+        }
+
+        .feedback-message {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: green;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container"> <!-- Corrected container class -->
+        <h2>Feedback Form</h2>
+        <p>We value your feedback! Please share your thoughts below.</p>
+
+        <form id="feedbackForm" action="https://formspree.io/f/xqapenjr" method="POST">
+            <label>Your Email:</label>
+            <input type="email" name="email" required>
+
+            <label>Your Message:</label>
+            <textarea name="message" required></textarea>
+
+            <button type="submit">Send</button>
+        </form>
+
+        <p class="feedback-message" id="feedbackMessage">Thank you! Your feedback has been received.</p>
+
+        <a href="index.html" class="back-button">Back to Home</a>
+    </div>
+
+    <script>
+        document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var form = this;
+            var feedbackMessage = document.getElementById("feedbackMessage");
+
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    feedbackMessage.style.display = "block";
+                    form.reset();
+                } else {
+                    feedbackMessage.style.color = "red";
+                    feedbackMessage.textContent = "Oops! Something went wrong.";
+                    feedbackMessage.style.display = "block";
+                }
+            }).catch(error => {
+                feedbackMessage.style.color = "red";
+                feedbackMessage.textContent = "Error: Unable to send feedback.";
+                feedbackMessage.style.display = "block";
+            });
+        });
+    </script>
+</body>
+
+</html>
