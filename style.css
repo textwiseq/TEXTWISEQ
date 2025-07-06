@@ -168,15 +168,46 @@ tr:hover {
     transition: 0.3s;
 }
 
-/* Responsive Table */
-@media screen and (max-width: 768px) {
-    table {
-        width: 100%;
+/* Responsive Table for Mobile */
+@media screen and (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
     }
 
-    th, td {
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
         padding: 10px;
-        font-size: 14px;
+        background-color: white;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+
+    td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        color: #4CAF50;
+    }
+
+    td:last-child {
+        border-bottom: none;
     }
 }
 
